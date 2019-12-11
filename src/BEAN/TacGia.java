@@ -1,6 +1,6 @@
 package BEAN;
 
-public class TacGia {
+public class TacGia implements java.lang.Comparable<TacGia> {
 	private String id;
 	private String email;
 	private String hoTen;
@@ -116,9 +116,13 @@ public class TacGia {
 		this.doDoGiaiPhapLyTuong = (double)Math.round((kcLyTuongXau/(kcLyTuongTot+kcLyTuongXau))*10000)/10000;
 	}
 	
-	@Override
-	 public double compareTo(TacGia tg) {
-	   return this.doDoGiaiPhapLyTuong.compareTo(tg.getDoDoGiaiPhapLyTuong());
+	 public int compareTo(TacGia tg) {
+		 if (this.doDoGiaiPhapLyTuong == tg.getDoDoGiaiPhapLyTuong())
+				return 0;
+			else if (this.doDoGiaiPhapLyTuong > tg.getDoDoGiaiPhapLyTuong())
+				return 1;
+			else
+				return -1;
 	  
 	 }
 	

@@ -3,6 +3,8 @@ package Controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,7 +58,7 @@ public class GoiY extends HttpServlet {
 		float[] phuongAnLyTuongTot = {0,0,0};
 		float[] phuongAnLyTuongXau = {1,1,1};
 		Connection conn = DBConnection.CreateConnect();
-		ArrayList<TacGia> tgList = TacGiaDAO.getUngCuVien(conn,nguoiVietBai);
+		List<TacGia> tgList = TacGiaDAO.getUngCuVien(conn,nguoiVietBai);
 		for( TacGia tg: tgList ) {
 			tg.setSoBanBeChung(GoiYDAO.timSoBanBeChung(conn, nguoiVietBai, tg.getEmail()));
 			tg.setSoBaiBaoVietChung(GoiYDAO.soBaiBaoVietChung(conn, nguoiVietBai, tg.getEmail()));
@@ -99,6 +101,7 @@ public class GoiY extends HttpServlet {
 			tg.tinhDoDoTuongTuGiaiPhapLT();
 			
 		}
+		Collections.sort(tgList,Collections.reverseOrder());
 		request.setAttribute("tgList", tgList);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("View/KQGoiY.jsp");

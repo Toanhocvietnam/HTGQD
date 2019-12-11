@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>
-		<%=session.getAttribute("username") %>
+		<%=session.getAttribute("email") %>
 	</h1>
 	<a href="GoiY">GoiY</a>
 	<a href="HCSTT/LogOut">LogOut</a>

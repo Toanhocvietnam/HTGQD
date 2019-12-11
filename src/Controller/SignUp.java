@@ -13,41 +13,36 @@ import javax.servlet.http.HttpSession;
 
 import DAO.TacGiaDAO;
 import DB.DBConnection;;
-/**
- * Servlet implementation class LogIn
- */
-@WebServlet("/LogIn")
-public class LogIn extends HttpServlet {
+
+@WebServlet("/SignUp")
+public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogIn() {
+    public SignUp() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		RequestDispatcher rd = request.getRequestDispatcher("View/Login.jsp");
 		rd.forward(request,response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String hoten = request.getParameter("hoten");
+		String sdt =  request.getParameter("sdt");
+		
 		Connection conn = DBConnection.CreateConnect();
-		boolean isValid = TacGiaDAO.validateUser(conn, username, password);
+	
+		boolean isValid = TacGiaDAO.kiemTraDangKi(conn, email);
 		if(isValid) {
+			TacGiaDAO.insertTacGia(conn,hoten, sdt, email, password);
 			HttpSession httpSession = request.getSession();
-			httpSession.setAttribute("email", username);
+			httpSession.setAttribute("email", email);
 			RequestDispatcher rd = request.getRequestDispatcher("View/Home.jsp");
 			rd.forward(request,response);
 		}
